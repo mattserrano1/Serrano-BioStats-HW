@@ -16,8 +16,7 @@ Loading in the Data file consumption
 compensation <- read.csv(here("Data", "compensation.csv"))
 ```
 
-Using dpplyr always takes and outputs a data frame. 
-
+Using dpplyr always takes and outputs a data frame.
 
 Section 3.1 of GSWR
 
@@ -61,8 +60,7 @@ Hi_Lo_Fruit <- filter(compensation, Fruit > 80 | Fruit < 20)
 
 Section 3.4 of GSWR Transforming
 
-Mutate
-you can add the created variable to the original data frame by overwriting it
+Mutate you can add the created variable to the original data frame by overwriting it
 
 ```{r}
 compensation <- mutate(compensation, logFruit = log(Fruit))
@@ -71,14 +69,13 @@ head(compensation)
 
 Section 3.5 Sorting data
 
-arrange()
-arranges rows in increasing order by a certain column variable
+arrange() arranges rows in increasing order by a certain column variable
+
 ```{r}
 arrange(compensation, Fruit) 
 ```
 
-Section 3.6 Top Tips
-How to use more than one dplyr verbs in one line of code
+Section 3.6 Top Tips How to use more than one dplyr verbs in one line of code
 
 ```{r}
 head(select(filter(compensation, Fruit > 80), Root))
@@ -88,7 +85,7 @@ gives the rootstalk widths that produce more than 80kg of fruit
 
 Top Tip 2
 
-%>% piping tells R to take output of one command and put it into another
+%\>% piping tells R to take output of one command and put it into another
 
 ```{r}
 compensation %>% filter(Fruit >80) %>% select(Root)
@@ -108,38 +105,3 @@ you can add more statistics easily to the above code
 ```{r}
 summarise(group_by(compensation, Grazing), meanFruit = mean(Fruit), sdFruit = sd(Fruit))
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
