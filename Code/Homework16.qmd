@@ -38,9 +38,25 @@ cover$cover_type[fix] <- "Vascular"
 
 not sure why this is not standardizing I did it the same way from the notes that I got and poked around on the internet but couldn't find anything helpful. vasc is still vasc but I don't get any sort of error message. 
 
+finding mean cover by plant type
 
+```{r}
+cover %>% summarise(mean(Percent)) %>% slice(1:12) %>% filter(cover, cover_type == Bare) #why does this line of code not work but putting the filter for cover_type first does?
+cover %>% filter(cover_type == "Bare") %>% slice(1:3) %>% summarise(mean(Percent))
+```
 
+```{r}
+cover %>% filter(cover_type == "Bryophytes") %>% slice(1:3) %>% summarise(mean(Percent))
+```
 
+```{r}
+cover %>% filter(cover_type == "Vascular") %>% slice(1:4) %>% summarise(mean(Percent))
+```
+finding average vascular plant cover across all sites
+
+```{r}
+cover %>% filter(cover_type == "Vascular") %>% summarise(mean(Percent))
+```
 
 
 

@@ -91,7 +91,7 @@ Top Tip 2
 compensation %>% filter(Fruit >80) %>% select(Root)
 ```
 
-Section 3.7 GSWR Calculating summary statistics about groups of yoru data
+Section 3.7 GSWR Calculating summary statistics about groups of yourgro data
 
 finding the mean of grazed and ungrazed fruit production
 
