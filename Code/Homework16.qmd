@@ -1,0 +1,78 @@
+---
+title: "Homework16"
+format: html
+editor: visual
+---
+
+set up
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+```
+
+Importing data set into R and examing data
+
+```{r}
+cover <- read.csv(here("Data", "donnerville_percent_cover.csv"))
+summary(cover)
+glimpse(cover)
+```
+
+converting the data types of certain columns to factor data and date format
+
+```{r}
+cover$Site <- as.factor(cover$Site)
+cover$Plot.type <- as.factor(cover$Plot.type)
+cover$cover_type <- as.factor(cover$cover_type)
+cover$Date <-  dmy(cover$Date)
+```
+
+Standardizing data by fixing data entry mistakes
+
+```{r}
+fix <- which(cover$cover_type %in% c("Vascular","vascular", "vasc"))
+cover$cover_type[fix] <- "Vascular"
+```
+
+not sure why this is not standardizing I did it the same way from the notes that I got and poked around on the internet but couldn't find anything helpful. vasc is still vasc but I don't get any sort of error message. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
