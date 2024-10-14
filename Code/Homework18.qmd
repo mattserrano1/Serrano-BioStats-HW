@@ -1,0 +1,102 @@
+---
+title: "Homework18"
+format: html
+editor: visual
+---
+
+set up
+
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(here)
+```
+
+loading data
+
+```{r}
+compensation <- read.csv(here("Data", "compensation.csv"))  
+```
+
+basic scatterplot
+the first functions ggplot() and aes() are responsible for creating the first layer of the graph like the lines and axis. The geom_point() function puts the points on the graph as a second layer. 
+
+theme_bw() gets rid of the gray background. kinda nice ig
+
+size = 5 changes the size of the points
+
+xlab and ylab change the labels of the respective axis
+
+color = grazing tells ggplot2 to give different colors to the "Grazing" variable
+
+shape = grazing tellgs ggplot2 to give different shapes to the "Grazing" variable
+
+
+
+```{r}
+ggplot(compensation, aes(
+  x = Root, y = Fruit, color = Grazing, shape = Grazing)) + geom_point(size = 5) + xlab("Root Biomass") + ylab("Fruit Production") + theme_bw()
+```
+
+Now creating a box and wisker plot with ggplot2
+
+alpha is the transparancy of the points within the box and wisker plot
+
+```{r}
+ggplot(compensation, aes(x = Grazing, y = Fruit)) + 
+  geom_boxplot() +
+  geom_point(size = 4, color = 'lightgrey', alpha = 0.5) +
+  xlab("Grazing treatment") +
+  ylab("Fruit Production") +
+  theme_bw()
+```
+
+1. plants with wider roots produce more fruit
+2. plants that are grazed also produce more fruit
+
+making a histogram
+
+you dont have to put in a y variable into the aes() function because the histogram sorts the data from the x variable into bins and then counts the number of points in each bin creating the variable for the y axis
+bins = 10 tells ggplot2 how many bins to sort the data into
+bins = 15 tells ggplot2 to do something not really sure what. Mabye it is the maximum range the data in each bin can be. 
+
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(bins = 10)
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(binwidth = 15)
+  
+```
+
+Facets
+creates two graphs for the price of writing the code once. Groups into two graphs based off a specified variable
+copied the line of code form the histogram that created the chart in the textbook
+
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(binwidth = 15) + 
+  facet_wrap(~Grazing)
+```
+
+ggsave() can be used to save plots to the working directory, what is called up by the here function or the folder the Rproj file is in. Can change size and whatnot along with file type. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
