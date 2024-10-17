@@ -36,12 +36,17 @@ fix <- which(cover$cover_type %in% c("Vascular","vascular", "vasc"))
 cover$cover_type[fix] <- "Vascular"
 ```
 
-not sure why this is not standardizing I did it the same way from the notes that I got, since I was not in class and poked around on the internet but couldn't find anything helpful. vasc is still vasc but I don't get any sort of error message. 
+not sure why this is not standardizing I did it the same way from the notes that I got, since I was not in class and poked around on the internet but couldn't find anything helpful. vasc is still vasc but I don't get any sort of error message.
 
 finding mean cover by plant type
 
 ```{r}
 cover %>% summarise(mean(Percent)) %>% slice(1:12) %>% filter(cover, cover_type == Bare) #why does this line of code not work but putting the filter for cover_type first does?
+
+##IN answer to your question, try stepping through each piece of the code one step at a time and see what happens, like this:
+
+cover |> summarise(mean(Percent)) #gives a mean of percent. So that is what all of the rest of the steps have to work with, which they can't, as you are now down to a single number. So you can't slice or filter a single number. Make sense?
+
 cover %>% filter(cover_type == "Bare") %>% slice(1:3) %>% summarise(mean(Percent))
 ```
 
@@ -52,43 +57,9 @@ cover %>% filter(cover_type == "Bryophytes") %>% slice(1:3) %>% summarise(mean(P
 ```{r}
 cover %>% filter(cover_type == "Vascular") %>% slice(1:4) %>% summarise(mean(Percent))
 ```
+
 finding average vascular plant cover across all sites
 
 ```{r}
 cover %>% filter(cover_type == "Vascular") %>% summarise(mean(Percent))
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
