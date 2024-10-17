@@ -18,8 +18,7 @@ loading data
 compensation <- read.csv(here("Data", "compensation.csv"))  
 ```
 
-basic scatterplot
-the first functions ggplot() and aes() are responsible for creating the first layer of the graph like the lines and axis. The geom_point() function puts the points on the graph as a second layer. 
+basic scatterplot the first functions ggplot() and aes() are responsible for creating the first layer of the graph like the lines and axis. The geom_point() function puts the points on the graph as a second layer.
 
 theme_bw() gets rid of the gray background. kinda nice ig
 
@@ -30,8 +29,6 @@ xlab and ylab change the labels of the respective axis
 color = grazing tells ggplot2 to give different colors to the "Grazing" variable
 
 shape = grazing tellgs ggplot2 to give different shapes to the "Grazing" variable
-
-
 
 ```{r}
 ggplot(compensation, aes(
@@ -51,14 +48,12 @@ ggplot(compensation, aes(x = Grazing, y = Fruit)) +
   theme_bw()
 ```
 
-1. plants with wider roots produce more fruit
-2. plants that are grazed also produce more fruit
+1.  plants with wider roots produce more fruit
+2.  plants that are grazed also produce more fruit
 
 making a histogram
 
-you dont have to put in a y variable into the aes() function because the histogram sorts the data from the x variable into bins and then counts the number of points in each bin creating the variable for the y axis
-bins = 10 tells ggplot2 how many bins to sort the data into
-bins = 15 tells ggplot2 to do something not really sure what. Mabye it is the maximum range the data in each bin can be. 
+you dont have to put in a y variable into the aes() function because the histogram sorts the data from the x variable into bins and then counts the number of points in each bin creating the variable for the y axis bins = 10 tells ggplot2 how many bins to sort the data into bins = 15 tells ggplot2 to do something not really sure what. Mabye it is the maximum range the data in each bin can be.
 
 ```{r}
 ggplot(compensation, aes(x = Fruit)) +
@@ -68,9 +63,7 @@ ggplot(compensation, aes(x = Fruit)) +
   
 ```
 
-Facets
-creates two graphs for the price of writing the code once. Groups into two graphs based off a specified variable
-copied the line of code form the histogram that created the chart in the textbook
+Facets creates two graphs for the price of writing the code once. Groups into two graphs based off a specified variable copied the line of code form the histogram that created the chart in the textbook
 
 ```{r}
 ggplot(compensation, aes(x = Fruit)) +
@@ -78,25 +71,4 @@ ggplot(compensation, aes(x = Fruit)) +
   facet_wrap(~Grazing)
 ```
 
-ggsave() can be used to save plots to the working directory, what is called up by the here function or the folder the Rproj file is in. Can change size and whatnot along with file type. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ggsave() can be used to save plots to the working directory, what is called up by the here function or the folder the Rproj file is in. Can change size and whatnot along with file type.

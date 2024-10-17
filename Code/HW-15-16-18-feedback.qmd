@@ -1,0 +1,23 @@
+---
+title: "Homework 15, 16, 18 feedback"
+format: html
+editor: visual
+---
+
+## Homework feedback
+
+### Homework 15
+
+Looks good - I like that you added some good information about what you were doing and why outside of code chunks.
+
+### Homework 16
+
+Lines 34 - 37 - you and I talked about this - you need to pay attention to the difference between "vasc" and "vasc ". I appreciate that you wrote down the issue you were having in the .qmd file as it makes it clear to me that you were thinking about what was going on.
+
+On line 44 you asked a question - I put some answers directly in your code at lines 46 - 48.
+
+You seemed to have missed a question about getting mean vascular plant cover at just Donnerville 1 site. Requires filter as well as group_by and summarise. Take a look at the key so you can make sure you understand how to use this combination of functions as they are very important to feel comfortable with.
+
+### Homework 18
+
+Again, nice job adding a lot of text outside of code chunks talking about what. you are doing. This will help you when you need to look back at homeworks to see how to do things.
