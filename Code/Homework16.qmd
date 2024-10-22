@@ -32,11 +32,13 @@ cover$Date <-  dmy(cover$Date)
 Standardizing data by fixing data entry mistakes
 
 ```{r}
-fix <- which(cover$cover_type %in% c("Vascular","vascular", "vasc"))
+levels(cover$cover_type)
+fix <- which(cover$cover_type %in% c("Vascular","vascular", "vasc "))
 cover$cover_type[fix] <- "Vascular"
+cover$cover_type <- factor(cover$cover_type) #releveling the factor
 ```
 
-not sure why this is not standardizing I did it the same way from the notes that I got, since I was not in class and poked around on the internet but couldn't find anything helpful. vasc is still vasc but I don't get any sort of error message. 
+not sure why this is not standardizing I did it the same way from the notes that I got, since I was not in class and poked around on the internet but couldn't find anything helpful. vasc is still vasc but I don't get any sort of error message.
 
 finding mean cover by plant type
 
@@ -52,43 +54,9 @@ cover %>% filter(cover_type == "Bryophytes") %>% slice(1:3) %>% summarise(mean(P
 ```{r}
 cover %>% filter(cover_type == "Vascular") %>% slice(1:4) %>% summarise(mean(Percent))
 ```
+
 finding average vascular plant cover across all sites
 
 ```{r}
 cover %>% filter(cover_type == "Vascular") %>% summarise(mean(Percent))
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
