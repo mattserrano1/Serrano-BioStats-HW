@@ -1,0 +1,60 @@
+---
+title: "Homework21"
+format: html
+editor: visual
+---
+
+# My first Chi-square contingency analysis
+
+setup
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+```
+
+import data
+
+```{r}
+lady <- read.csv(here("Data", "ladybirds.csv"))
+glimpse(lady)
+```
+Grouping data for analysis
+
+```{r}
+totals <- lady |>
+  group_by(Habitat, colour) |>
+  summarise(total_number = sum(number))
+```
+
+Making a bar chart
+
+```{r}
+ggplot(totals, aes(x = Habitat, y = total_number, fill = colour))+
+  geom_bar(stat = 'identity', position = 'dodge')
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
