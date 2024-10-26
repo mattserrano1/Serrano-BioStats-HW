@@ -32,11 +32,26 @@ Making a bar chart
 
 ```{r}
 ggplot(totals, aes(x = Habitat, y = total_number, fill = colour))+
-  geom_bar(stat = 'identity', position = 'dodge')
+  geom_bar(stat = 'identity', position = 'dodge')+
+  scale_fill_manual(values = c(black = "black", red = "red"))
+  
 ```
 
+making a matrix of lady data to do a chi sq
 
 
+```{r}
+ladymat <- xtabs(number ~ Habitat + colour, data = lady)
+# this does the same thing as the group_by()and summarise() functions
+```
+
+doing a chi-square test
+a test on the significance of your data. 
+
+```{r}
+lady.chi <- chisq.test(ladymat) 
+names(lady.chi)#gives more information on the chisq test
+```
 
 
 
