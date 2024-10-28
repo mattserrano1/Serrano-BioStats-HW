@@ -42,13 +42,16 @@ I noticed that it is a pretty simple data set that only shows vaccination status
 Now you need to write some code to obtain the actual counts and save them in a new object called `covid_counts`. You will use the familiar `group_by` and `summarise`. However, you need to try a new trick to get counts when your dataset has no actual numbers in it. I'm going to suggest that within your `summarise` statement you create a new variable called `count`. And I'm going to ask you to see if you can figure out how to use a function called `length` to obtain count data. You may need to use the help in RStudio or google to figure out how to do this step
 
 ```{r}
-count_status <- covid |>
-  group_by(Vaccination_status) |>
+count_covid <- covid |>
+  group_by(Vaccination_status, Survival) |>
   summarise(count = length(Vaccination_status))
-count_Survival <- covid |>
-  group_by(Survival) |>
-  summarise(count = length(Survival))
-count <- cbind(count_status, count_Survival)
+# you only have to put one variable since it is already grouping into the groups
+# thats why it wasn't working when I put both 
+
+#count_Survival <- covid |>
+  #group_by(Survival) |>
+ # summarise(count = length(Survival))
+#count <- cbind(count_status, count_Survival)
 
 
 
@@ -58,8 +61,9 @@ count <- cbind(count_status, count_Survival)
 Now make a bar plot that shows the count data using the `covid_counts` dataframe you just created. Put survival on the x-axis and fill the bars based on vaccination status. Color vaccinated patients in dark green and unvaccinated patients in black. Remove the gray background.
 
 ```{r}
-ggplot(count, aes(x=count.1, y=count, fill = colour))+
-  geom_bar(stat = 'identity', position = 'dodge')
+ggplot(count_covid, aes(x=Survival, count, fill = Vaccination_status ))+
+  geom_bar(stat= "identity", position = "dodge")+
+  scale_fill_manual(values = c("Fully vaccinated" = "darkgreen", "Not vaccinated" = "black"))
 
 ```
 
@@ -68,11 +72,11 @@ ggplot(count, aes(x=count.1, y=count, fill = colour))+
 Now use the information from Chapter 5 and Homework 21 to conduct a Chi-square test of association. Your "null hypothesis" is that there is no association between whether a patient has had a covid vaccine and their survival in the emergency room.
 
 ```{r}
-countmatrix <- xtabs(count ~  Vaccination_status+ Survival, data = count)
+countmatrix <- xtabs(count ~  Vaccination_status, Survival, data = count_covid)
 ```
 
 ```{r}
-count_covidchi <- chisq.test(countmatrix)
+count_covidchi <- chisq.test(countmatrix) 
 ```
 
 ## Interpret the results
