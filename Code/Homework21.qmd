@@ -53,10 +53,42 @@ lady.chi <- chisq.test(ladymat)
 names(lady.chi)#gives more information on the chisq test
 ```
 
+Read in the ozone data 
+
+```{r}
+ozone <- read.csv(here("Data","ozone.csv"))
+glimpse(ozone)
+```
+
+Making two histograms of the data to see if the means are different across groupings. 
+
+changing Garden.location and Garden.ID to factor data 
+
+```{r}
+ozone$Garden.location <- as.factor(ozone$Garden.location)
+ozone$Garden.ID <- as.factor(ozone$Garden.ID)
+ozone$Ozone <- as.factor(ozone$Ozone)
+ozone$Ozone
+levels(ozone$Garden.ID)
+levels(ozone$Garden.location)
+levels(ozone$Ozone)
+```
 
 
+```{r}
+ggplot(ozone, aes(ozone))+
+  geom_histogram(binwidth = 10)+
+  facet_wrap(~ Garden.location, ncol = 1)+
+  theme_bw()
+#Not sure what the error here is I've tried changing a few things
+```
 
+doing a t test
 
+```{r}
+t.test(ozone ~ Garden.location, data = ozone)
+```
+i think I might have messed up the data somehow while I was making garden location and ID factor data. 
 
 
 
