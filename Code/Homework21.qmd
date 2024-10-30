@@ -20,6 +20,7 @@ import data
 lady <- read.csv(here("Data", "ladybirds.csv"))
 glimpse(lady)
 ```
+
 Grouping data for analysis
 
 ```{r}
@@ -39,30 +40,28 @@ ggplot(totals, aes(x = Habitat, y = total_number, fill = colour))+
 
 making a matrix of lady data to do a chi sq
 
-
 ```{r}
 ladymat <- xtabs(number ~ Habitat + colour, data = lady)
 # this does the same thing as the group_by()and summarise() functions
 ```
 
-doing a chi-square test
-a test on the significance of your data. 
+doing a chi-square test a test on the significance of your data.
 
 ```{r}
 lady.chi <- chisq.test(ladymat) 
 names(lady.chi)#gives more information on the chisq test
 ```
 
-Read in the ozone data 
+Read in the ozone data
 
 ```{r}
 ozone <- read.csv(here("Data","ozone.csv"))
 glimpse(ozone)
 ```
 
-Making two histograms of the data to see if the means are different across groupings. 
+Making two histograms of the data to see if the means are different across groupings.
 
-changing Garden.location and Garden.ID to factor data 
+changing Garden.location and Garden.ID to factor data
 
 ```{r}
 ozone$Garden.location <- as.factor(ozone$Garden.location)
@@ -73,7 +72,6 @@ levels(ozone$Garden.ID)
 levels(ozone$Garden.location)
 levels(ozone$Ozone)
 ```
-
 
 ```{r}
 ggplot(ozone, aes(ozone))+
@@ -88,20 +86,5 @@ doing a t test
 ```{r}
 t.test(ozone ~ Garden.location, data = ozone)
 ```
-i think I might have messed up the data somehow while I was making garden location and ID factor data. 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+i think I might have messed up the data somehow while I was making garden location and ID factor data.

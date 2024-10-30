@@ -1,0 +1,84 @@
+---
+title: "Homework23"
+format: html
+editor: visual
+---
+
+Set up 
+ 
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+```
+
+IMporting data
+
+```{r}
+plantgrowth <- read.csv(here("Data", "plant.growth.rate.csv"))
+glimpse(plantgrowth)
+```
+
+Making a scattorplot
+
+```{r}
+ggplot(plantgrowth, aes(x=soil.moisture.content, y=plant.growth.rate))+
+  geom_point()+
+  ylab("Plant Growth Rate (mm/week)")+
+  theme_bw()
+```
+
+Making a simple linear regression
+
+```{r}
+model_pgr <- lm(plant.growth.rate ~ soil.moisture.content, data=plantgrowth)
+```
+
+Looking at the assumptions of the test
+
+```{r}
+autoplot(model_pgr, smooth.colour = NA)
+```
+
+Making an anova and summary table
+this will show us if soil moisture has an affect on the growth rate. 
+
+```{r}
+anova(model_pgr) |>
+  View()
+summary(model_pgr) |> 
+  View()
+```
+
+Using ggplot2 to add regression lines and visualse the anova tables results
+
+```{r}
+ggplot(plantgrowth, aes(x=soil.moisture.content, y=plant.growth.rate))+
+  geom_point()+
+  geom_smooth(method = 'lm')+
+  ylab("Plant Growth Rate (mm/week)")+
+  theme_bw()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
