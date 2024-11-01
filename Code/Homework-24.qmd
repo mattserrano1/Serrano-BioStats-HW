@@ -50,15 +50,21 @@ Is there a relationship between height and weight in female crabs?
 3.  Work through the data analysis **following all of the steps provided in chapter 5 of your book**. You may use class notes or homework keys as a guide.
 
 ```{r}
-ggplot(female_crabs, aes(x=Weight, y=Height))+
+ggplot(female_crabs, aes(x=Height, y=Weight))+
   geom_point()+
   theme_bw()
 ```
 
+remove an outlier
+```{r}
+female_crabs <- female_crabs |> filter(Height < 2) 
+```
+
+
 making a regression model
 
 ```{r}
-model_fcrabs <- lm(Height~Weight, data=female_crabs)
+model_fcrabs <- lm(Weight~Height, data=female_crabs)
 ```
 
 visualizing the results
@@ -66,18 +72,30 @@ visualizing the results
 ```{r}
 autoplot(model_fcrabs, smooth.colour = NA)
 ```
+These test the assumptions of a linear regression.
+equally distributed(shown in top right plot) and equal variance in the data(shown in bottom left, we are looking for a lack of a pattern).
+
+
+
 
 making an anova and summary table
 
 ```{r}
-anova(model_fcrabs) |>
-  View()
-summary(model_fcrabs) |>
-  View()
+anova(model_fcrabs) 
+  
+summary(model_fcrabs)
+ 
 ```
+The R-squared number is what percent of the crabs weight is determined by height. 
+0.6715 means that 67 percent of the weight is determined solely by the height of the crabs. 
+This is good since we are explaining 67% of the relationship with one variable. 
+A perfect line of best fit means that every data point goes through the line and R-squared = 1. 
+
+
+
 making regression lines to visualize results and to look for any relationship. 
 ```{r}
-ggplot(female_crabs, aes(x=Weight, y=Height))+
+ggplot(female_crabs, aes(x=Height, y=Weight))+
   geom_point()+
   geom_smooth(method = 'lm')+
   theme_bw()
