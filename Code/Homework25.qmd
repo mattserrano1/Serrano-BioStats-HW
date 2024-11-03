@@ -1,0 +1,103 @@
+---
+title: "Homework25"
+format: html
+editor: visual
+---
+
+Setting up
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+```
+
+Loading Data
+
+```{r}
+daphnia <- read.csv(here("data", "Daphniagrowth.csv"))
+glimpse(daphnia)
+```
+
+Making parasite factor data
+
+```{r}
+daphnia$parasite <- as.factor(daphnia$parasite)
+```
+
+Making a box and wisker plot to see variation in the response. 
+
+```{r}
+ggplot(daphnia, aes(x=parasite, y=growth.rate))+
+  geom_boxplot()+
+  theme_bw()+
+  coord_flip()
+
+```
+
+Estimating mean
+control - 1.2
+MB- .85
+PP - 1.1
+PR - 0.55
+degrees of freedom - 3
+
+Making the ANOVA
+
+```{r}
+model_grow <- lm(growth.rate ~ parasite, data = daphnia)
+```
+
+Plotting the data
+
+```{r}
+autoplot(model_grow, smooth.colour = NA)
+```
+The data from the Q-Q test is okay despite looking weird
+- i guess this is because there are not many data points that are off and they are all at the tails of the data. 
+
+Anova and summary to make infrences from the summary. 
+
+```{r}
+anova(model_grow)
+```
+Is there an affect at all of the treatments?
+- Yes there is because the p value is quite small.
+
+What are the effects?
+
+```{r}
+summary(model_grow)
+```
+
+Control is labelled as intercept
+- Intercept is always the first level when they are organized alphabetically. 
+
+How to get mean growth rates with dpplyr functions
+
+```{r}
+sumDat <- daphnia |> 
+  group_by(parasite) |> 
+  summarise(meanGR = mean(growth.rate))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
