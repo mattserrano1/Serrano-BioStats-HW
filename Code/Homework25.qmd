@@ -28,6 +28,8 @@ daphnia$parasite <- as.factor(daphnia$parasite)
 
 Making a box and wisker plot to see variation in the response. 
 
+Coord_flip() flibs the axis so that it is easier to read the group names
+
 ```{r}
 ggplot(daphnia, aes(x=parasite, y=growth.rate))+
   geom_boxplot()+
@@ -63,7 +65,7 @@ Anova and summary to make infrences from the summary.
 anova(model_grow)
 ```
 Is there an affect at all of the treatments?
-- Yes there is because the p value is quite small.
+- Yes there is because the p value is quite small allowing a rejection of the null hypothesis of there being no variance.
 
 What are the effects?
 
@@ -82,7 +84,10 @@ sumDat <- daphnia |>
   summarise(meanGR = mean(growth.rate))
 ```
 
-
+How one way test of variance works:
+- F is the statistic and is the ratio of between/within variance. 
+- If F is high then there is a larger between group variance than within group variance
+      - So a high F value indicates more signifigance in the data. 
 
 
 
