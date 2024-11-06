@@ -38,12 +38,9 @@ ggplot(daphnia, aes(x=parasite, y=growth.rate))+
 
 ```
 
-Estimating means: control - 1.2 MB- .85 PP - 1.15 PR - 0.55 
-degrees of freedom - 3
-Error degrees of freedom are 36 from 40 samples minus the 4 treatments. 
+Estimating means: control - 1.2 MB- .85 PP - 1.15 PR - 0.55 degrees of freedom - 3 Error degrees of freedom are 36 from 40 samples minus the 4 treatments.
 
-Making the ANOVA
-we can still use the lm() function since it is a linear model
+Making the ANOVA we can still use the lm() function since it is a linear model
 
 ```{r}
 model_grow <- lm(growth.rate ~ parasite, data = daphnia)
@@ -54,14 +51,8 @@ Plotting the data
 ```{r}
 autoplot(model_grow)
 ```
-Residuals vs Fitted:
-The straight line shows that a linear model is a good choice for this data. 
-Normal Q-Q:
-The data from the Q-Q test is okay despite looking weird - i guess this is because there are not many data points that are off and they are all at the tails of the data.
-Scale-Location:
-Are the data homogeneous among the data set
-Constant Leverage:
-Are any points have a larger affect on the data. 
+
+Residuals vs Fitted: The straight line shows that a linear model is a good choice for this data. Normal Q-Q: The data from the Q-Q test is okay despite looking weird - i guess this is because there are not many data points that are off and they are all at the tails of the data. Scale-Location: Are the data homogeneous among the data set Constant Leverage: Are any points have a larger affect on the data.
 
 Anova and summary to make infrences from the summary.
 
@@ -69,21 +60,17 @@ Anova and summary to make infrences from the summary.
 anova(model_grow)
 ```
 
-Is there an affect at all of the treatments? - Yes there is because the p value is quite small allowing a rejection of the null hypothesis of there being no variance.
-There is a statistically significant effect of parasite treatment on growth rate of daphnia (F(as a subscript 3, 36)=32.325, p=2.57e-10). 
+Is there an affect at all of the treatments? - Yes there is because the p value is quite small allowing a rejection of the null hypothesis of there being no variance. There is a statistically significant effect of parasite treatment on growth rate of daphnia (F(as a subscript 3, 36)=32.325, p=2.57e-10).
 
 What are the effects?
 
 ```{r}
 summary(model_grow)
 ```
-There is a significant difference between the Metschinikowia bicuspidata (p < 0.0001) and the control and 
 
-
-
+There is a significant difference between the Metschinikowia bicuspidata (p \< 0.0001) and the control and
 
 Control is labelled as intercept - Intercept is always the first level when they are organized alphabetically.
-
 
 How to get mean growth rates with dpplyr functions
 
@@ -95,12 +82,9 @@ sumDat <- daphnia |>
 
 How one way test of variance works: - F is the statistic and is the ratio of between/within variance. - If F is high then there is a larger between group variance than within group variance - So a high F value indicates more significance in the data.
 
-
 How to plot the means difference
+
 ```{r}
 ggplot(daphnia,aes(parasite, growth.rate, color=parasite))+
   geom_point()
 ```
-
-
-
