@@ -5,6 +5,7 @@ editor: visual
 ---
 
 setting up
+
 ```{r}
 rm(list=ls())
 library(tidyverse)
@@ -14,17 +15,20 @@ library(multcomp)
 ```
 
 importing data
+
 ```{r}
 peas <- read.csv(here("Data", "s_r_pea_sections.csv"))
 glimpse(peas)
 ```
 
 Making data factor
-```{r}
 
+```{r}
+peas$Treatment <- as.factor(peas$Treatment)
 ```
 
-Making a box and wisker plot to get a look at the data and make guesses at outcomes. 
+Making a box and wisker plot to get a look at the data and make guesses at outcomes.
+
 ```{r}
 ggplot(peas, aes(x=Treatment, y=pea_section_length_ou))+
   geom_boxplot()+
@@ -33,63 +37,50 @@ ggplot(peas, aes(x=Treatment, y=pea_section_length_ou))+
   theme_bw()
 ```
 
-
-Degrees of freedom -> 4
-Estimating Means
-Control -> 71
-2% sucrose -> 63.5
-2% glucose -> 64
-2% fructose -> 58.3
-1% fructose 1% glucose -> 57.9
+Degrees of freedom -> 4 Estimating Means Control -> 71 2% sucrose -> 63.5 2% glucose -> 64 2% fructose -> 58.3 1% fructose 1% glucose -> 57.9
 
 Making an ANOVA model
+
 ```{r}
-model_peas <- lm(Treatment ~ pea_section_length_ou, data = peas)
+model_peas <- lm(pea_section_length_ou ~ Treatment, data = peas)
 ```
 
 Plotting the model to check for the assumptions of the model
+
 ```{r}
 autoplot(model_peas, smooth.colour=NA)
 ```
 
-Data does not seem very normally distributed. Not sure if it is badly enough distributed though to make the test not good. 
-The data does seem to be randomly distributed in the Scale-Location grpah though which is good. 
-There are a few points that seem to be having a larger leverage on the data but this could be due to the fact that the control group was very different from the other groups. As a result I am going to leave them in the analysis. 
+The data does seem to be relatively normally distributed as all the points are along the line of fit even if they seem to trail off to the left there is a consistent pattern as to how they do.
 
-Making an ANOVA to make inferences from the data. 
+Making an ANOVA to make inferences from the data.
+
 ```{r}
 anova(model_peas)
 ```
-Is there a significant difference?
-There is a significant difference between the control group and the treatment groups (F=49.368, DF=4, p=6.737e-16). 
+
+Is there a significant difference? There is a significant difference between the control group and the treatment groups (F 4,45=49.368, DF=4, p=6.737e-16).
 
 What are the effects?
+
 ```{r}
 summary(model_peas)
 ```
+
 The model shows that the variance in pea shoot length is almost completely explained by the variation between treatments (R-squared = 0.8144). The model shows that there is a significant difference between the 1% fructose 1% glucose treatment and the other treatments(p=2e-16). 
 
 Doing a Tukey test between the different treatments.
+
 ```{r}
-Tukey_peas <- glht(model_peas, linfct = mcp(pea_section_length_ou = 'Tukey'))
+Tukey_peas <- glht(model_peas, linfct = mcp(Treatment = 'Tukey'))
 summary(Tukey_peas)
 ```
+According to the Tukey test there wasn't a significant difference between treatments between 2% glucose adn 2% fructose, 2% glucose and 1 percent fructose 1 percent glucose, and 2% fructose and 1 percent fructose 1 percent glucose (p=0.829091, p=0.725619, p=0.999688). All other treatment comparisons show a significant difference (p=1e-04).
 
-I did the homework all the way through before noticing that I switched the response and predictor variables. when i switched it back I got this error message, 
-Warning in model.response(mf, "numeric") :
-  using type = "numeric" with a factor response will be ignored
-Warning in Ops.factor(y, z$residuals) : ‘-’ not meaningful for factors
-I don't know how to fix this, i've done everything the same way I have before and I don't think changing pea_section_length to factor data would be a good idea. I think it would make the statistics run differently and give a compeltly irrelevant answer. 
-
-
-
-
-
-
-
-
-
-
+This makes it easier to read the results
+```{r}
+cld(Tukey_peas)
+```
 
 
 
