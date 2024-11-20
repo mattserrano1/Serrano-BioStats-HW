@@ -207,13 +207,7 @@ rm(df, df1)
 
 What if we wanted to test the hypothesis that there is no effect of fertilizer treatment on plant growth rate?
 
-Our predictor variable type is:
-- Treatment it is categorical
-Our response variable type is:
-- Growth_rate_mm it is continuous 
-Therefore our statistical method is:
-- one way ANOVA there is more than two groups we are comparing 
-We will do our analysis TWICE, once with all of the data (no NA's removed) and a second time with just the complete cases, to see if there is a difference, and, if so, which approach is better.
+Our predictor variable type is: - Treatment it is categorical Our response variable type is: - Growth_rate_mm it is continuous Therefore our statistical method is: - one way ANOVA there is more than two groups we are comparing We will do our analysis TWICE, once with all of the data (no NA's removed) and a second time with just the complete cases, to see if there is a difference, and, if so, which approach is better.
 
 ### First attempt: All the data
 
@@ -226,8 +220,7 @@ ggplot(df_All_NA, aes(Treatment, Growth_rate_mm))+
   theme_bw()
 ```
 
-What do you think?
-The treatments will definetly have a significant difference form the control but I think there might not be a difference between level 1 and level 2. 
+What do you think? The treatments will definitely have a significant difference form the control but I think there might not be a difference between level 1 and level 2.
 
 #### Create a model:
 
@@ -253,10 +246,15 @@ Practice your interpretation.
 
 Why are there 2 DF for the Treatment effect?
 
+-   Because there are three treatments and DF is found using the formula n-1
+
 Why are there 46 DF for the Residuals?
+
+-   There are 46 DF for the Residuals because it is the amount of observations minus the number of parameters, treatments in this analysis.
 
 How would you write a results statement?
 
+-   There is not a significant difference in growth rate between treatments (F 2,46, p = 0.03253).
 
 ```{r}
 summary(model_grow)
@@ -266,7 +264,11 @@ Practice your interpretation:
 
 Does adding 1 dose of fertilizer change the growth rate significantly from the Control?
 
-Does adding 2 doses of fertilizer change the growth rate signficantly from the Control?
+-   Adding one dose of fertilizer does not change the growth rate significantly from the control ( t=1.783, p = 0.0812)
+
+Does adding 2 doses of fertilizer change the growth rate significantly from the Control?
+
+-   Adding two doses of fertilizer does not significantly change the treatment from the control ( t=2.659, p = 0.0108).
 
 We won't worry about re-plotting our data right now.
 
@@ -284,6 +286,8 @@ ggplot(df_No_NA, aes(Treatment, Growth_rate_mm))+
 ```
 
 What do you think?
+
+They look pretty similar but the ranges seem to appear tighter than before.
 
 #### Create a model:
 
@@ -309,9 +313,15 @@ Practice your interpretation.
 
 Why are there 2 DF for the Treatment effect?
 
+-   Because there are 3 treatments and the formula to find the DF is total treatments -1.
+
 Why are there 33 DF for the Residuals?
 
+-   Total observations with the number of treatments subtracted from it.
+
 How would you write a results statement?
+
+-   There is not a significant difference in growth rate between treatments (F 2, 33 =2.7902, p = 0.0759).
 
 ```{r}
 summary(grow.mod.no.NA)
@@ -321,6 +331,99 @@ Practice your interpretation:
 
 Does adding 1 dose of fertilizer change the growth rate significantly from the Control?
 
-Does adding 2 doses of fertilizer change the growth rate signficantly from the Control?
+-   The addition of one does of fertilizer does not change the growth rate significantly (t=1.624, df = 2, p = 0.1139.
 
-We won't worry about re-plotting our data right now.
+Does adding 2 doses of fertilizer change the growth rate significantly from the Control?
+
+-   The addition of two doses of fertilizer has a significant effect on growth rate (t = 2.232, df = 2, p = 0.0325).
+
+# Linear Regressions
+
+The complete data set
+
+Plotting data to get a sense for the relationships
+
+```{r}
+ggplot(df_All_NA, aes(Growth_rate_mm,Dried_mass_g))+
+  geom_point()+
+  theme_bw()
+```
+
+Does not look like there is a very large significant difference in the data since the points are spread out almost randomly.
+
+making a model
+
+```{r}
+regression_all <- lm(Dried_mass_g ~ Growth_rate_mm, data = df_All_NA)
+```
+
+Visualizing the regression to check data assumptions
+
+```{r}
+autoplot(regression_all)
+```
+
+Residuals vs fitted graph really does not look that good quite a large hump in the line.
+
+Q-Q graph looks good data is evenly distributed.
+
+Scale- Location looks decent with a equal variance amoung the data
+
+No crazy outliers in the data seems alright in Residuals vs leverage
+
+Interpreting the model
+
+```{r}
+anova(regression_all)
+```
+
+```{r}
+summary(regression_all)
+```
+
+Questions:
+
+What are the degrees of freedom?
+
+-   There is one degree of freedom
+
+What is the R2 value of each regression?
+
+-   The R2 value of this regression is 0.2412
+
+Is the relationship significant?
+
+-   Yes there is a significant relationship between dried mass of a plant and its growth rate (F,3,34 = 10.81, p = 0.002356).
+
+Regression of No NA value data
+
+Plotting it
+
+```{r}
+ggplot(df_No_NA, aes(Growth_rate_mm, Dried_mass_g))+
+  geom_point()+
+  theme_bw()
+```
+
+Again looks pretty random but there is a small trend of a postive slope but I would expect the R2 to be quite small again.
+
+Making a model
+
+```{r}
+regression_No_NA <- lm(Dried_mass_g ~ Growth_rate_mm, data = df_No_NA)
+```
+
+Plotting the model to check for assumptions
+
+```{r}
+autoplot(regression_No_NA)
+```
+
+Looks about the same as when we did it with the reduced data set so all of the interpretations would be the same as when I checked my data previously.
+
+
+
+
+
+
+

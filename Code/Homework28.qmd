@@ -1,0 +1,159 @@
+---
+title: "Homwork28"
+format: html
+editor: visual
+---
+
+# Set up
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(dplyr)
+library(multcomp)
+library(ggfortify)
+library(here)
+library(gridExtra)
+```
+
+# Reading in data
+
+```{r}
+compensation <- read.csv(here("Data", "compensation.csv"))
+```
+
+Making Grazing a factor
+
+```{r}
+compensation$Grazing <- as.factor(compensation$Grazing)
+```
+
+# Making some graphs
+
+Base scatterplot
+
+```{r}
+eg_scatter <- ggplot(data = compensation, aes(Root, Fruit))+
+  geom_point()
+```
+
+Base box plot
+
+```{r}
+eg_box <- ggplot(data = compensation, aes(Grazing, Fruit))+
+  geom_boxplot()
+```
+
+Adding theme_bw to eg_scatter
+
+```{r}
+eg_scatter + theme_bw()
+```
+
+# Using gridExtra
+
+```{r}
+grid.arrange(eg_scatter, eg_box, nrow = 1)
+```
+
+# Axis labels limits and annotation
+
+using ylab and xlab
+
+```{r}
+eg_scatter + xlab("Root Biomass") + ylab("Fruit Production")
+#using a title if you reall want
+eg_scatter + ggtitle("TITLE")
+# you can also combine ylab and xlab into one function
+eg_scatter + labs(title = "WHY", x= "Root Biomass", y= "Fruit Production")
+```
+
+# Changing ranges of x and y axis
+
+```{r}
+eg_scatter + xlim(0,20) + ylim(0,140)
+```
+
+# Adding custom text
+
+the x and y numbers are used as coordinates for where the text will go. Can put as many as you want seperated by commas using c().
+
+```{r}
+eg_scatter + annotate("text", x = c(6,8), y= c(105,25),
+                      label = c("Text up here...", "and text down here"))
+```
+
+# Scales
+
+Scale() used to change things that are tied to the variables that we are plotting.
+
+changing length of x axis and location of tick marks
+
+```{r}
+eg_scatter + scale_x_continuous(limits = c(4,11), breaks = 4:11)
+```
+
+# changing colors of the graph
+
+```{r}
+ggplot(data = compensation, aes(Root, Fruit, colour = Grazing))+
+  geom_point()+
+  scale_colour_manual(values = c(Grazed = "brown", Ungrazed = "green"))
+```
+
+using scale to log transform the y axis
+
+```{r}
+eg_box + scale_y_continuous(breaks = seq(from = 10, to = 150, by = 20), 
+                            trans = "log10")
+```
+
+# Transforming graphs using theme
+
+This is what theme_bw() does Getting rid of some gridlines but putting in light blue major gridlines
+
+```{r}
+eg_scatter +
+  theme(
+    panel.background = element_rect(fill=NA, colour = "black"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_line(colour = "lightblue")
+  )
+```
+
+Changing anlge and colour of axis labels
+
+```{r}
+eg_box+
+  theme(
+    axis.title.x = element_text(colour = "cornflowerblue", size =rel(2)),
+    axis.text.x = element_text(angle = 45, size=13,vjust=0.5))
+  )
+```
+
+Discrite axis customizing
+```{r}
+eg_box +scale_x_discrete(limits = c("Ungrazed", "Grazed"),
+                         labels = c("Control", "Grazed"))
+```
+
+theme() syntax for legands
+```{r}
+ggplot(compensation, aes(Root, Fruit, colour = Grazing))+
+  geom_point()+
+  theme(legend.key = element_rect(fill = NA))
+```
+
+What if you dont want a key?
+```{r}
+ggplot(compensation, aes(Root, Fruit, colour = Grazing))+
+  geom_point()+
+  theme(legend.position = "none")
+```
+
+
+
+
+
+
+
